@@ -36,7 +36,7 @@ playwright.config.js   base URL, storage state, browser projects
 Requires Node.js 18+.
 
 ```bash
-git clone https://github.com/ryanjasper14/playwright-upskill-jasmacs.git
+git clone https://github.com/jasper3211/playwright-upskill-jasmacs.git
 cd playwright-upskill-jasmacs
 npm install
 npx playwright install        # downloads the browsers
