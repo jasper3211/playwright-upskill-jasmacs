@@ -45,8 +45,16 @@ npx playwright test --project=chromium   # one browser
 npx playwright show-report    # open the HTML report
 ```
 
-The credentials used are SauceDemo's public demo account (`standard_user` / `secret_sauce`),
-published on the site's login page. No private credentials are stored in this repo.
+The login tests read `PLAY_USERNAME` and `PLAY_PASSWORD` from the environment. Locally, put them
+in a `.env` file (git-ignored):
+
+```bash
+PLAY_USERNAME=standard_user
+PLAY_PASSWORD=secret_sauce
+```
+
+In CI they come from GitHub Actions secrets. The values are SauceDemo's public demo account,
+published on the site's login page, so no private credentials are involved.
 
 ## Author
 

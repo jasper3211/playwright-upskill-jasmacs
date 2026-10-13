@@ -19,6 +19,9 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
+      env:
+        PLAY_USERNAME: ${{ secrets.PLAY_USERNAME }}
+        PLAY_PASSWORD: ${{ secrets.PLAY_PASSWORD }}
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:

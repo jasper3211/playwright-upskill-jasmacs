@@ -9,6 +9,7 @@ export default defineConfig({
     viewport: { width: 1280, height: 720 },
   },
   testDir: './playwright_upskill', // Test folder
+  reporter: [['list'], ['html', { open: 'never' }]], // HTML report is uploaded by CI
   retries: 0,
   workers: 3,
 
