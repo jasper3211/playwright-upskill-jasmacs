@@ -1,46 +1,54 @@
-# playwright-upskill-jasmacs
+# Playwright Upskill — SauceDemo E2E Suite
 
-A simple upskilling project focused on mastering the fundamentals and best practices of automated web testing using [Playwright](https://playwright.dev/).
+End-to-end UI tests for [SauceDemo](https://www.saucedemo.com), a public demo store, written with
+[Playwright](https://playwright.dev/). Built to practise the patterns I use in production QA work:
+page objects, a shared login state, cross-browser runs and CI.
 
-## 🎯 Project Goal
+## What's covered
 
-This repository serves as a personal sandbox for practicing and exploring Playwright-based UI automation. It includes various test scenarios designed to strengthen your understanding of browser automation, selectors, and testing workflows.
+| Area | Scenarios |
+| --- | --- |
+| **Login** | Login page UI elements are visible · empty fields show the required error · invalid credentials are rejected · valid credentials log in |
+| **Cart** | Add one item · go back to shopping from the cart · add a second item · add two items · remove items from the cart |
+| **Checkout** | Fill in the checkout information form |
+| **Date picker** | Fill today's date into a date input |
 
-## 🛠 Tech Stack
+## How it's built
 
-- [Playwright](https://playwright.dev/)  
-- JavaScript or TypeScript (depending on your setup)  
-- Node.js
+- **Page Object Model** — `pages/InventoryPage.js` and `pages/CartPage.js` hold the selectors and
+  actions, so specs read as user steps and a UI change is fixed in one place.
+- **Log in once, reuse everywhere** — `setup/login.setup.js` runs as Playwright's `globalSetup`,
+  logs in a single time and saves the session to `storageState`, so cart and checkout tests start
+  already signed in instead of repeating the login flow.
+- **Cross-browser** — every test runs in Chromium, Firefox and WebKit (3 parallel workers).
+- **CI** — `.github/workflows/playwright.yml` runs the suite on every push and pull request to
+  `master` and uploads the HTML report as a build artifact.
 
-## 👤 Target Audience
-
-This project is intended for **Software QA engineers** and testers who are learning or upskilling in Playwright for UI automation.
-
-## ⚙️ Installation & Setup
-2. Install Dependencies
-- Make sure you have Node.js installed (preferably version 18 or higher).
-``` bash
-- npm install
+```
+pages/                 page objects (InventoryPage, CartPage)
+playwright_upskill/    specs, grouped by feature: login/ inventory/ calendar/
+setup/                 global login setup + saved login state
+playwright.config.js   base URL, storage state, browser projects
 ```
 
-3. Install Playwright Browsers
-```bash
-- npx playwright install
-```
+## Run it
 
-4. Run Tests
-```bash
-- npx playwright test
-```
-- Optional: Open the Test Report
-- After running tests, you can view the report using:
-``` bash
-  - npx playwright show-report
-```
-
-
-### 1. Clone the Repository
+Requires Node.js 18+.
 
 ```bash
-git clone https://github.com/your-username/playwright-upskill-jasmacs.git
+git clone https://github.com/ryanjasper14/playwright-upskill-jasmacs.git
 cd playwright-upskill-jasmacs
+npm install
+npx playwright install        # downloads the browsers
+npx playwright test           # all browsers
+npx playwright test --project=chromium   # one browser
+npx playwright show-report    # open the HTML report
+```
+
+The credentials used are SauceDemo's public demo account (`standard_user` / `secret_sauce`),
+published on the site's login page. No private credentials are stored in this repo.
+
+## Author
+
+**Ryan Jasper Macapobre**, Software QA Engineer.
+[LinkedIn](https://www.linkedin.com/in/ryanjaspermacs/)
